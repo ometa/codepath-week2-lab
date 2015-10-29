@@ -39,7 +39,7 @@ public class BookListActivity extends ActionBarActivity {
         // attach the adapter to the ListView
         lvBooks.setAdapter(bookAdapter);
         // Fetch the data remotely
-        fetchBooks("Oscar Wilde");
+//        fetchBooks("Oscar Wilde");
     }
 
     // Executes an API call to the OpenLibrary search endpoint, parses the results
