@@ -29,8 +29,8 @@ public class MediaStoreHelper {
         return uri;
     }
 
-
-
+    // There's an emulator bug, see:
+    // https://code.google.com/p/android/issues/detail?id=75447
     public static void initMediaDir() {
         File sdcard = Environment.getExternalStorageDirectory();
         if (sdcard == null) { return; }

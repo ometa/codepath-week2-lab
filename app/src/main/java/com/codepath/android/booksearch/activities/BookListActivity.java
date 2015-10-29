@@ -10,6 +10,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
+import android.widget.ProgressBar;
 
 import com.codepath.android.booksearch.R;
 import com.codepath.android.booksearch.adapters.BookAdapter;
@@ -59,6 +60,7 @@ public class BookListActivity extends AppCompatActivity {
     // Executes an API call to the OpenLibrary search endpoint, parses the results
     // Converts them into an array of book objects and adds them to the adapter
     private void fetchBooks(String query) {
+        showProgressBar();
         client = new BookClient();
         client.getBooks(query, new JsonHttpResponseHandler() {
             @Override
@@ -82,9 +84,30 @@ public class BookListActivity extends AppCompatActivity {
                     // Invalid JSON format, show appropriate error.
                     e.printStackTrace();
                 }
+                hideProgressBar();
             }
         });
     }
+
+    MenuItem miActionProgress;
+
+    @Override
+    public boolean onPrepareOptionsMenu(Menu menu) {
+        miActionProgress = menu.findItem(R.id.miActionProgress);
+        ProgressBar v = (ProgressBar) MenuItemCompat.getActionView(miActionProgress);
+        return super.onPrepareOptionsMenu(menu);
+    }
+
+    public void showProgressBar() {
+        miActionProgress.setVisible(true);
+    }
+
+    public void hideProgressBar() {
+        miActionProgress.setVisible(false);
+    }
+
+
+
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
