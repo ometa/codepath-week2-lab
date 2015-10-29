@@ -14,29 +14,32 @@ import com.codepath.android.booksearch.models.Book;
 import com.squareup.picasso.Picasso;
 
 public class BookDetailActivity extends AppCompatActivity {
-    private ImageView ivBookCover;
-    private TextView tvTitle;
-    private TextView tvAuthor;
+
+    private static class ViewHolder {
+        private ImageView ivBookCover;
+        private TextView tvTitle;
+        private TextView tvAuthor;
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_book_detail);
         // Fetch views
-        //viewHolder = new ViewHolder();
+        ViewHolder viewHolder = new ViewHolder();
 
-        ivBookCover = (ImageView) findViewById(R.id.ivBookCover);
-        tvTitle = (TextView) findViewById(R.id.tvTitle);
-        tvAuthor = (TextView) findViewById(R.id.tvAuthor);
+        viewHolder.ivBookCover = (ImageView) findViewById(R.id.ivBookCover);
+        viewHolder.tvTitle = (TextView) findViewById(R.id.tvTitle);
+        viewHolder.tvAuthor = (TextView) findViewById(R.id.tvAuthor);
 
         // Extract book object from intent extras
         Intent intent = getIntent();
         Book book = (Book) intent.getParcelableExtra("book");
-        
+
         // Use book object to populate data into views
-        Picasso.with(getApplicationContext()).load(Uri.parse(book.getLargeCoverUrl())).placeholder(R.drawable.ic_nocover).into(ivBookCover);
-        tvTitle.setText(book.getTitle());
-        tvAuthor.setText(book.getAuthor());
+        Picasso.with(getApplicationContext()).load(Uri.parse(book.getLargeCoverUrl())).placeholder(R.drawable.ic_nocover).into(viewHolder.ivBookCover);
+        viewHolder.tvTitle.setText(book.getTitle());
+        viewHolder.tvAuthor.setText(book.getAuthor());
     }
 
 
