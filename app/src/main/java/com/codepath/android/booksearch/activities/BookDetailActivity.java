@@ -1,15 +1,19 @@
 package com.codepath.android.booksearch.activities;
 
+import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
-import android.support.v7.app.ActionBarActivity;
+import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.codepath.android.booksearch.R;
+import com.codepath.android.booksearch.models.Book;
+import com.squareup.picasso.Picasso;
 
-public class BookDetailActivity extends ActionBarActivity {
+public class BookDetailActivity extends AppCompatActivity {
     private ImageView ivBookCover;
     private TextView tvTitle;
     private TextView tvAuthor;
@@ -19,13 +23,20 @@ public class BookDetailActivity extends ActionBarActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_book_detail);
         // Fetch views
+        //viewHolder = new ViewHolder();
+
         ivBookCover = (ImageView) findViewById(R.id.ivBookCover);
         tvTitle = (TextView) findViewById(R.id.tvTitle);
         tvAuthor = (TextView) findViewById(R.id.tvAuthor);
 
         // Extract book object from intent extras
-
+        Intent intent = getIntent();
+        Book book = (Book) intent.getParcelableExtra("book");
+        
         // Use book object to populate data into views
+        Picasso.with(getApplicationContext()).load(Uri.parse(book.getLargeCoverUrl())).placeholder(R.drawable.ic_nocover).into(ivBookCover);
+        tvTitle.setText(book.getTitle());
+        tvAuthor.setText(book.getAuthor());
     }
 
 

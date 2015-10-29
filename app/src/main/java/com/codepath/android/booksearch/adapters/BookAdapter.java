@@ -53,4 +53,6 @@ public class BookAdapter extends ArrayAdapter<Book> {
         // Return the completed view to render on screen
         return convertView;
     }
+
+
 }

@@ -1,11 +1,14 @@
 package com.codepath.android.booksearch.activities;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.view.MenuItemCompat;
-import android.support.v7.app.ActionBarActivity;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.SearchView;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ListView;
 
 import com.codepath.android.booksearch.R;
@@ -23,7 +26,7 @@ import java.util.ArrayList;
 import cz.msebera.android.httpclient.Header;
 
 
-public class BookListActivity extends ActionBarActivity {
+public class BookListActivity extends AppCompatActivity {
     private ListView lvBooks;
     private BookAdapter bookAdapter;
     private BookClient client;
@@ -33,14 +36,25 @@ public class BookListActivity extends ActionBarActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_book_list);
         lvBooks = (ListView) findViewById(R.id.lvBooks);
-        ArrayList<Book> aBooks = new ArrayList<Book>();
+        final ArrayList<Book> aBooks = new ArrayList<Book>();
         // initialize the adapter
         bookAdapter = new BookAdapter(this, aBooks);
         // attach the adapter to the ListView
         lvBooks.setAdapter(bookAdapter);
         // Fetch the data remotely
 //        fetchBooks("Oscar Wilde");
+
+        lvBooks.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Book book = aBooks.get(position);
+                Intent intent = new Intent(BookListActivity.this, BookDetailActivity.class);
+                intent.putExtra("book", book);
+                startActivity(intent);
+            }
+        });
     }
+
 
     // Executes an API call to the OpenLibrary search endpoint, parses the results
     // Converts them into an array of book objects and adds them to the adapter
